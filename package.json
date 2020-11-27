@@ -1,0 +1,23 @@
+{
+  "name": "gersonu.github.io",
+  "version": "1.0.0",
+  "description": "npm package for github pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GersonU/GersonU.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GersonU/GersonU.github.io/issues"
+  },
+  "homepage": "https://github.com/GersonU/GersonU.github.io#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-gh-pages": "^0.5.4"
+  }
+}
