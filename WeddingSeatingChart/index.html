@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wedding Seating Chart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <style>
+      .ui-menu{
+        font-family: Pinyon Script;
+      }
+      input[placeholder], [placeholder], *[placeholder] {
+        font-family: Pinyon Script;
+      }
+      *::placeholder {
+        font-family: Pinyon Script;
+      }
+      .searchLabel{
+        font-family: Pinyon Script;
+      }
+      .CustomBorder{
+        max-width: 1604px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        margin-top: 52px;
+        margin-bottom: 100px;
+        padding: 60px;
+        background-image: radial-gradient( circle at 0 0, #f5efe8 60px, #000000 60px, #000000 62px, transparent 60px ),radial-gradient( circle at 100% 0, #f5efe8 60px, #000000 60px, #000000 62px, transparent 60px ),radial-gradient( circle at 0 100%, #f5efe8 60px, #000000 60px, #000000 62px, transparent 60px ),radial-gradient( circle at 100% 100%, #f5efe8 60px, #000000 60px, #000000 62px, transparent 60px );
+      }
+      .CustomBorder::before{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: calc(100% - 120px);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        border-left: 2px solid #000000;
+        border-right: 2px solid #000000;
+        z-index: -1;
+      }
+      .CustomBorder::after{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: calc(100% - 120px);
+        height: 100%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        border-top: 2px solid #000000;
+        border-bottom: 2px solid #000000;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body style="background-color:#f5efe8;">
+    <div class="container CustomBorder">
+      <div class="row justify-content-center align-items-center p-5">
+        <img src="../images/Curlicue.png" style="max-width: 25%; transform: scaleY(-1);">
+      </div>
+      <div class="row mx-auto justify-content-center align-items-center p-5">
+        <div class="col-4 p-5">
+          <label for="search" class="form-label searchLabel fw-bold">Type first or last name to find your seat:</label>
+          <input class="form-control .bg-dark" type="text" id="search" placeholder="Type here to search"/>
+        </div>
+      </div>
+      <div class="row justify-content-center align-items-center p-5">
+        <img src="../images/Curlicue.png" style="max-width: 25%;">
+      </div>
+    </div>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+  <script>
+    var googleData = [];
+
+    async function TryFetch(){
+      var id = '1F03RU3t14CAyU8STkKR4cYzi2W6Gajxu10-mW1KO7lQ';
+      var gid = '0';
+      var responsePromise = await fetch(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&tq&gid=${gid}`);
+      responsePromise.text().then(
+        function(value){
+          var jsonString = value.match(/(?<="table":).*(?=}\);)/g)[0];
+          var json = JSON.parse(jsonString);
+          var table = []
+          var row = []
+          json.cols.forEach(colonne => row.push(colonne.label))
+          table.push(row)
+          json.rows.forEach(r => {
+            var row = []
+            r.c.forEach(cel => {
+                try{var value = cel.f ? cel.f : cel.v}
+                catch(e){var value = ''}
+                row.push(value)
+              }
+            )
+            table.push(row)
+            }
+          )
+          table.shift();
+          if(googleData.length > 0)
+            googleData = [];
+          table.forEach(function(person){googleData.push(`${person[0]} ${person[1]} Table: ${person[2]}`)});
+        },
+        function(error){googleData.push("Unable to find your seat")}
+      );
+    }
+
+
+    $(document).ready(function(){
+      TryFetch();
+      $( "#search" ).autocomplete({
+        source: googleData,
+        response: function(event, ui){
+          if(ui.content.length == 0){
+            ui.content.push({label : "Unable to find your seat"})
+          }
+        }
+      });
+    });
+  </script>
+</html>
