@@ -57,21 +57,21 @@
         
 
         
-            <link>https://example.com/tags/text/</link>
+            <link>https://example.com/GalaxyTax/tags/text/</link>
         
 
         
-            <atom:link href="https://example.com/tags/text/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
+            <atom:link href="https://example.com/GalaxyTax/tags/text/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
         
 
         
             
 
-            <atom:link href="https://example.com/tags/text/" hreflang="en-us" rel="alternate" type="text/html"/>
+            <atom:link href="https://example.com/GalaxyTax/tags/text/" hreflang="en-us" rel="alternate" type="text/html"/>
         
             
 
-            <atom:link href="https://example.com/tags/text/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+            <atom:link href="https://example.com/GalaxyTax/tags/text/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
         
 
         
@@ -126,11 +126,11 @@
                     
 
                     
-                        <guid isPermaLink="false">tag:example.com,0001-01-01:/content/placeholder-text/</guid>
+                        <guid isPermaLink="false">tag:example.com,0001-01-01:/GalaxyTax/content/placeholder-text/</guid>
                     
 
                     
-                        <link>https://example.com/content/placeholder-text/</link>
+                        <link>https://example.com/GalaxyTax/content/placeholder-text/</link>
                     
 
                     
@@ -138,7 +138,7 @@
 
                         
 
-                        <atom:link href="https://example.com/content/placeholder-text/" hreflang="en-us" rel="alternate" type="text/html"/>
+                        <atom:link href="https://example.com/GalaxyTax/content/placeholder-text/" hreflang="en-us" rel="alternate" type="text/html"/>
                     
 
                     

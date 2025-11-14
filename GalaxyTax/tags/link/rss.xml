@@ -57,21 +57,21 @@
         
 
         
-            <link>https://example.com/tags/link/</link>
+            <link>https://example.com/GalaxyTax/tags/link/</link>
         
 
         
-            <atom:link href="https://example.com/tags/link/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
+            <atom:link href="https://example.com/GalaxyTax/tags/link/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
         
 
         
             
 
-            <atom:link href="https://example.com/tags/link/" hreflang="en-us" rel="alternate" type="text/html"/>
+            <atom:link href="https://example.com/GalaxyTax/tags/link/" hreflang="en-us" rel="alternate" type="text/html"/>
         
             
 
-            <atom:link href="https://example.com/tags/link/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+            <atom:link href="https://example.com/GalaxyTax/tags/link/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
         
 
         
@@ -128,11 +128,11 @@
                     
 
                     
-                        <description><![CDATA[<p>It takes you to the home page.</p><p><a href=https://example.com/content/link/>⏎</a></p>]]></description>
+                        <description><![CDATA[<p>It takes you to the home page.</p><p><a href=https://example.com/GalaxyTax/content/link/>⏎</a></p>]]></description>
                     
 
                     
-                        <guid isPermaLink="false">tag:example.com,0001-01-01:/content/link/</guid>
+                        <guid isPermaLink="false">tag:example.com,0001-01-01:/GalaxyTax/content/link/</guid>
                     
 
                     

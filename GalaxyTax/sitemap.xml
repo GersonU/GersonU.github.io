@@ -2,60 +2,60 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/</loc>
+    <loc>https://example.com/GalaxyTax/</loc>
   </url><url>
-    <loc>https://example.com/content/alert/</loc>
+    <loc>https://example.com/GalaxyTax/content/alert/</loc>
   </url><url>
-    <loc>https://example.com/tags/alerts/</loc>
+    <loc>https://example.com/GalaxyTax/tags/alerts/</loc>
   </url><url>
-    <loc>https://example.com/authors/author-demo/</loc>
+    <loc>https://example.com/GalaxyTax/authors/author-demo/</loc>
   </url><url>
-    <loc>https://example.com/authors/</loc>
+    <loc>https://example.com/GalaxyTax/authors/</loc>
   </url><url>
-    <loc>https://example.com/categories/</loc>
+    <loc>https://example.com/GalaxyTax/categories/</loc>
   </url><url>
-    <loc>https://example.com/categories/content/</loc>
+    <loc>https://example.com/GalaxyTax/categories/content/</loc>
   </url><url>
-    <loc>https://example.com/content/</loc>
+    <loc>https://example.com/GalaxyTax/content/</loc>
   </url><url>
-    <loc>https://example.com/tags/css/</loc>
+    <loc>https://example.com/GalaxyTax/tags/css/</loc>
   </url><url>
-    <loc>https://example.com/tags/emoji/</loc>
+    <loc>https://example.com/GalaxyTax/tags/emoji/</loc>
   </url><url>
-    <loc>https://example.com/content/emoji-support/</loc>
+    <loc>https://example.com/GalaxyTax/content/emoji-support/</loc>
   </url><url>
-    <loc>https://example.com/tags/html/</loc>
+    <loc>https://example.com/GalaxyTax/tags/html/</loc>
   </url><url>
-    <loc>https://example.com/tags/katex/</loc>
+    <loc>https://example.com/GalaxyTax/tags/katex/</loc>
   </url><url>
-    <loc>https://example.com/tags/link/</loc>
+    <loc>https://example.com/GalaxyTax/tags/link/</loc>
   </url><url>
-    <loc>https://example.com/content/link/</loc>
+    <loc>https://example.com/GalaxyTax/content/link/</loc>
   </url><url>
-    <loc>https://example.com/tags/markdown/</loc>
+    <loc>https://example.com/GalaxyTax/tags/markdown/</loc>
   </url><url>
-    <loc>https://example.com/content/markdown-syntax/</loc>
+    <loc>https://example.com/GalaxyTax/content/markdown-syntax/</loc>
   </url><url>
-    <loc>https://example.com/tags/math/</loc>
+    <loc>https://example.com/GalaxyTax/tags/math/</loc>
   </url><url>
-    <loc>https://example.com/content/math-typesetting/</loc>
+    <loc>https://example.com/GalaxyTax/content/math-typesetting/</loc>
   </url><url>
-    <loc>https://example.com/categories/paige/</loc>
+    <loc>https://example.com/GalaxyTax/categories/paige/</loc>
   </url><url>
-    <loc>https://example.com/content/placeholder-text/</loc>
+    <loc>https://example.com/GalaxyTax/content/placeholder-text/</loc>
   </url><url>
-    <loc>https://example.com/tags/privacy/</loc>
+    <loc>https://example.com/GalaxyTax/tags/privacy/</loc>
   </url><url>
-    <loc>https://example.com/content/rich-content/</loc>
+    <loc>https://example.com/GalaxyTax/content/rich-content/</loc>
   </url><url>
-    <loc>https://example.com/series/</loc>
+    <loc>https://example.com/GalaxyTax/series/</loc>
   </url><url>
-    <loc>https://example.com/tags/shortcodes/</loc>
+    <loc>https://example.com/GalaxyTax/tags/shortcodes/</loc>
   </url><url>
-    <loc>https://example.com/tags/</loc>
+    <loc>https://example.com/GalaxyTax/tags/</loc>
   </url><url>
-    <loc>https://example.com/tags/text/</loc>
+    <loc>https://example.com/GalaxyTax/tags/text/</loc>
   </url><url>
-    <loc>https://example.com/tags/typesetting/</loc>
+    <loc>https://example.com/GalaxyTax/tags/typesetting/</loc>
   </url>
 </urlset>

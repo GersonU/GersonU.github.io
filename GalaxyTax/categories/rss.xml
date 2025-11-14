@@ -53,21 +53,21 @@
         
 
         
-            <link>https://example.com/categories/</link>
+            <link>https://example.com/GalaxyTax/categories/</link>
         
 
         
-            <atom:link href="https://example.com/categories/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
+            <atom:link href="https://example.com/GalaxyTax/categories/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
         
 
         
             
 
-            <atom:link href="https://example.com/categories/" hreflang="en-us" rel="alternate" type="text/html"/>
+            <atom:link href="https://example.com/GalaxyTax/categories/" hreflang="en-us" rel="alternate" type="text/html"/>
         
             
 
-            <atom:link href="https://example.com/categories/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+            <atom:link href="https://example.com/GalaxyTax/categories/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
         
 
         
