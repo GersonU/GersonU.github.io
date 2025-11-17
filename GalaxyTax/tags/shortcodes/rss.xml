@@ -43,7 +43,7 @@
 <rss version="2.0"  xml:lang="en-us"  xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         
-            <copyright>© Will Faught</copyright>
+            <copyright>Gina Castellon</copyright>
         
 
         
@@ -57,35 +57,31 @@
         
 
         
-            <link>https://example.com/GalaxyTax/tags/shortcodes/</link>
+            <link>http://localhost:1313/GalaxyTax/tags/shortcodes/</link>
         
 
         
-            <atom:link href="https://example.com/GalaxyTax/tags/shortcodes/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/shortcodes/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
         
 
         
             
 
-            <atom:link href="https://example.com/GalaxyTax/tags/shortcodes/" hreflang="en-us" rel="alternate" type="text/html"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/shortcodes/" hreflang="en-us" rel="alternate" type="text/html"/>
         
             
 
-            <atom:link href="https://example.com/GalaxyTax/tags/shortcodes/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/shortcodes/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
         
 
         
 
         
-            <managingEditor>example@example.com (John Doe)</managingEditor>
-        
 
         
-            <title>Shortcodes · Tags · Paige</title>
+            <title>Shortcodes · Tags · GalaxyTax</title>
         
 
-        
-            <webMaster>example@example.com (John Doe)</webMaster>
         
 
         
@@ -128,11 +124,11 @@ and a set of Simple Shortcodes that enable static and no-JS versions of various 
                     
 
                     
-                        <guid isPermaLink="false">tag:example.com,0001-01-01:/GalaxyTax/content/rich-content/</guid>
+                        <guid isPermaLink="false">tag:localhost:1313,0001-01-01:/GalaxyTax/content/rich-content/</guid>
                     
 
                     
-                        <link>https://example.com/GalaxyTax/content/rich-content/</link>
+                        <link>http://localhost:1313/GalaxyTax/content/rich-content/</link>
                     
 
                     
@@ -140,7 +136,7 @@ and a set of Simple Shortcodes that enable static and no-JS versions of various 
 
                         
 
-                        <atom:link href="https://example.com/GalaxyTax/content/rich-content/" hreflang="en-us" rel="alternate" type="text/html"/>
+                        <atom:link href="http://localhost:1313/GalaxyTax/content/rich-content/" hreflang="en-us" rel="alternate" type="text/html"/>
                     
 
                     

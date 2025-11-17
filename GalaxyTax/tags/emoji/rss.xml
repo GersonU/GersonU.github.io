@@ -43,7 +43,7 @@
 <rss version="2.0"  xml:lang="en-us"  xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         
-            <copyright>© Will Faught</copyright>
+            <copyright>Gina Castellon</copyright>
         
 
         
@@ -57,35 +57,31 @@
         
 
         
-            <link>https://example.com/GalaxyTax/tags/emoji/</link>
+            <link>http://localhost:1313/GalaxyTax/tags/emoji/</link>
         
 
         
-            <atom:link href="https://example.com/GalaxyTax/tags/emoji/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/emoji/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
         
 
         
             
 
-            <atom:link href="https://example.com/GalaxyTax/tags/emoji/" hreflang="en-us" rel="alternate" type="text/html"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/emoji/" hreflang="en-us" rel="alternate" type="text/html"/>
         
             
 
-            <atom:link href="https://example.com/GalaxyTax/tags/emoji/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/emoji/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
         
 
         
 
         
-            <managingEditor>example@example.com (John Doe)</managingEditor>
-        
 
         
-            <title>Emoji · Tags · Paige</title>
+            <title>Emoji · Tags · GalaxyTax</title>
         
 
-        
-            <webMaster>example@example.com (John Doe)</webMaster>
         
 
         
@@ -132,11 +128,11 @@ is a useful reference for emoji shorthand codes.</p><hr><p><strong>N.B.</strong>
                     
 
                     
-                        <guid isPermaLink="false">tag:example.com,0001-01-01:/GalaxyTax/content/emoji-support/</guid>
+                        <guid isPermaLink="false">tag:localhost:1313,0001-01-01:/GalaxyTax/content/emoji-support/</guid>
                     
 
                     
-                        <link>https://example.com/GalaxyTax/content/emoji-support/</link>
+                        <link>http://localhost:1313/GalaxyTax/content/emoji-support/</link>
                     
 
                     
@@ -144,7 +140,7 @@ is a useful reference for emoji shorthand codes.</p><hr><p><strong>N.B.</strong>
 
                         
 
-                        <atom:link href="https://example.com/GalaxyTax/content/emoji-support/" hreflang="en-us" rel="alternate" type="text/html"/>
+                        <atom:link href="http://localhost:1313/GalaxyTax/content/emoji-support/" hreflang="en-us" rel="alternate" type="text/html"/>
                     
 
                     

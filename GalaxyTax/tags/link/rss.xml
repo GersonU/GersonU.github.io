@@ -43,7 +43,7 @@
 <rss version="2.0"  xml:lang="en-us"  xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         
-            <copyright>© Will Faught</copyright>
+            <copyright>Gina Castellon</copyright>
         
 
         
@@ -57,35 +57,31 @@
         
 
         
-            <link>https://example.com/GalaxyTax/tags/link/</link>
+            <link>http://localhost:1313/GalaxyTax/tags/link/</link>
         
 
         
-            <atom:link href="https://example.com/GalaxyTax/tags/link/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/link/rss.xml" hreflang="en-us" rel="self" type="application/rss+xml"/>
         
 
         
             
 
-            <atom:link href="https://example.com/GalaxyTax/tags/link/" hreflang="en-us" rel="alternate" type="text/html"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/link/" hreflang="en-us" rel="alternate" type="text/html"/>
         
             
 
-            <atom:link href="https://example.com/GalaxyTax/tags/link/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
+            <atom:link href="http://localhost:1313/GalaxyTax/tags/link/rss.xml" hreflang="en-us" rel="alternate" type="application/rss+xml"/>
         
 
         
 
         
-            <managingEditor>example@example.com (John Doe)</managingEditor>
-        
 
         
-            <title>Link · Tags · Paige</title>
+            <title>Link · Tags · GalaxyTax</title>
         
 
-        
-            <webMaster>example@example.com (John Doe)</webMaster>
         
 
         
@@ -128,11 +124,11 @@
                     
 
                     
-                        <description><![CDATA[<p>It takes you to the home page.</p><p><a href=https://example.com/GalaxyTax/content/link/>⏎</a></p>]]></description>
+                        <description><![CDATA[<p>It takes you to the home page.</p><p><a href=http://localhost:1313/GalaxyTax/content/link/>⏎</a></p>]]></description>
                     
 
                     
-                        <guid isPermaLink="false">tag:example.com,0001-01-01:/GalaxyTax/content/link/</guid>
+                        <guid isPermaLink="false">tag:localhost:1313,0001-01-01:/GalaxyTax/content/link/</guid>
                     
 
                     
