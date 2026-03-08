@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>GAS ping test</title>
+<button id="btn">Ping GAS</button>
+<pre id="out"></pre>
+<script>
+const URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL'; // the /exec URL from Deployments
+btn.onclick = () => {
+  const out = document.getElementById('out');
+  out.textContent = 'Posting...';
+
+  // Keep it "simple": text/plain, no custom headers, no credentials.
+  fetch(URL, {
+    method: 'POST',
+    redirect: 'follow', // important for Apps Script redirect
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ hello: 'world' })
+  })
+  .then(async r => {
+    // If fetch fails CORS, this won't run; you'll see a console error.
+    const text = await r.text();
+    out.textContent = `HTTP ${r.status}\n${text}`;
+    try {
+      console.log('JSON:', JSON.parse(text));
+    } catch {}
+  })
+  .catch(err => {
+    out.textContent = 'Fetch error: ' + err;
+    console.error(err);
+  });
+};
+</script>
