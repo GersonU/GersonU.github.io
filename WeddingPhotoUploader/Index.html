@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Drive Uploader</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Google Identity Services (GIS) for OAuth 2.0 (popup) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 24px; }
+    h1 { font-size: 1.4rem; margin: 0 0 16px; }
+    .card { background: var(--card-bg, #fff); border-radius: 14px; padding: 18px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.06); }
+    .btns { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 12px; }
+    button, a.btn {
+      appearance: none; border: 1px solid #1f6feb; background: #2f81f7; color: #fff; padding: 10px 14px;
+      border-radius: 10px; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    }
+    button.secondary, a.btn.secondary {
+      background: transparent; color: #2f81f7; border-color: #2f81f7;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .hint { font-size: 0.92rem; color: #6b7280; margin-top: 6px; }
+    .list { margin-top: 18px; display: grid; gap: 12px; }
+    .item { border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 12px; background: rgba(0,0,0,0.02); }
+    .name { font-weight: 600; word-break: break-all; }
+    .meta { font-size: 0.85rem; color: #6b7280; display: flex; gap: 16px; flex-wrap: wrap; }
+    .bar {
+      width: 100%; height: 10px; border-radius: 999px; background: rgba(0,0,0,0.08); overflow: hidden; margin-top: 8px;
+    }
+    .bar > div { height: 100%; width: 0%; background: linear-gradient(90deg, #2f81f7, #13c6ff); transition: width 0.2s ease; }
+    .status { font-size: 0.9rem; margin-top: 6px; }
+    .ok { color: #16a34a; }
+    .err { color: #dc2626; }
+    .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .spacer { flex: 1; }
+    code.kv { padding: 2px 6px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.04); }
+    .small { font-size: 0.86rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Upload Photos & Videos to Drive</h1>
+    <div class="card">
+      <div class="btns">
+        <button id="uploadBtn">Upload photos/videos</button>
+        <a class="btn secondary" id="openFolderBtn" target="_blank" rel="noopener">Open shared folder</a>
+      </div>
+      <div class="hint">
+        • You’ll be asked to sign in with Google in a popup the first time.<br />
+        • Uploads stay on this page; progress is shown below.<br />
+        • Accepted: images & videos (multiple files allowed).
+      </div>
+
+      <input id="fileInput" type="file" accept="image/*,video/*" multiple hidden />
+
+      <div class="list" id="list"></div>
+
+      <div class="hint small">
+        <strong>Note:</strong> Upload requires the user to have <em>upload permissions (Editor/Contributor)</em> on the target folder.  
+        For truly public/anonymous uploads, use the <em>Apps Script</em> option shown below in the code comments.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========================
+    // CONFIGURE THESE VALUES
+    // ========================
+    const CONFIG = {
+      CLIENT_ID: '875058801430-ts3ou23cccpj0538khnhng5c388dgo05.apps.googleusercontent.com',
+      FOLDER_ID: '1BHmcNLzyUNgYO0qfIQqAYJCrVzDBSoY7',
+      // Minimal scope so the app can only create files it owns on the user's Drive.
+      // If you run into permission issues targeting a shared drive/folder, switch to 'https://www.googleapis.com/auth/drive'
+      SCOPE: 'https://www.googleapis.com/auth/drive.file',
+      // If the folder is in a Shared Drive, keeping supportsAllDrives=true is recommended.
+      SUPPORTS_ALL_DRIVES: true
+    };
+
+    // Globals (kept in-memory)
+    let tokenClient = null;
+    let accessToken = null;
+
+    // UI elements
+    const uploadBtn = document.getElementById('uploadBtn');
+    const openFolderBtn = document.getElementById('openFolderBtn');
+    const fileInput = document.getElementById('fileInput');
+    const listEl = document.getElementById('list');
+
+    // Init on load
+    window.addEventListener('load', () => {
+      // Wire up buttons
+      uploadBtn.addEventListener('click', () => fileInput.click());
+      openFolderBtn.href = `https://drive.google.com/drive/folders/${encodeURIComponent(CONFIG.FOLDER_ID)}`;
+      fileInput.addEventListener('change', handleFiles);
+
+      // Prepare Google Identity Services token client
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CONFIG.CLIENT_ID,
+        scope: CONFIG.SCOPE,
+        prompt: '' // empty = use account chooser only when needed; no forced re-consent
+      });
+    });
+
+    // Ask for an access token (popup). Resolve once we have it.
+    function ensureAccessToken() {
+      return new Promise((resolve, reject) => {
+        if (accessToken) return resolve(accessToken);
+
+        tokenClient.callback = (resp) => {
+          if (resp && resp.access_token) {
+            accessToken = resp.access_token;
+            resolve(accessToken);
+          } else {
+            reject(resp && resp.error ? resp.error : new Error('OAuth popup failed'));
+          }
+        };
+
+        // First call: force consent. On subsequent calls you can omit 'prompt' for silent refresh if still valid.
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+      });
+    }
+
+    async function handleFiles(evt) {
+      const files = Array.from(evt.target.files || []);
+      if (!files.length) return;
+
+      uploadBtn.disabled = true;
+
+      try {
+        await ensureAccessToken();
+      } catch (e) {
+        alert('Sign-in failed. Cannot upload.');
+        uploadBtn.disabled = false;
+        return;
+      }
+
+      for (const file of files) {
+        try {
+          await uploadOne(file);
+        } catch (err) {
+          console.error(err);
+          // continue with next file
+        }
+      }
+
+      uploadBtn.disabled = false;
+      fileInput.value = ''; // reset selection
+    }
+
+    // Create a UI item for each file
+    function makeItem(file) {
+      const item = document.createElement('div');
+      item.className = 'item';
+
+      const row1 = document.createElement('div');
+      row1.className = 'row';
+      const name = document.createElement('div');
+      name.className = 'name';
+      name.textContent = file.name;
+      const spacer = document.createElement('div'); spacer.className = 'spacer';
+      const size = document.createElement('div');
+      size.className = 'meta';
+      size.textContent = pretty(file.size);
+      row1.append(name, spacer, size);
+
+      const bar = document.createElement('div'); bar.className = 'bar';
+      const fill = document.createElement('div'); bar.appendChild(fill);
+
+      const status = document.createElement('div'); status.className = 'status';
+      status.textContent = 'Starting…';
+
+      item.append(row1, bar, status);
+      listEl.prepend(item);
+
+      return { item, fill, status };
+    }
+
+    function pretty(bytes) {
+      if (!Number.isFinite(bytes)) return '';
+      const u = ['B', 'KB', 'MB', 'GB', 'TB'];
+      let i = 0, n = bytes;
+      while (n >= 1024 && i < u.length - 1) { n /= 1024; i++; }
+      return `${n.toFixed(n < 10 && i > 0 ? 1 : 0)} ${u[i]}`;
+    }
+
+    // Step 1: Start a Drive resumable session and get the session URL.
+    async function startResumableSession(file) {
+      const meta = {
+        name: file.name,
+        mimeType: file.type || 'application/octet-stream',
+        parents: [CONFIG.FOLDER_ID]
+      };
+
+      const qs = new URLSearchParams({ uploadType: 'resumable' });
+      if (CONFIG.SUPPORTS_ALL_DRIVES) qs.set('supportsAllDrives', 'true');
+
+      const res = await fetch(`https://www.googleapis.com/upload/drive/v3/files?${qs.toString()}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json; charset=UTF-8',
+          'X-Upload-Content-Type': meta.mimeType,
+          'X-Upload-Content-Length': String(file.size)
+        },
+        body: JSON.stringify(meta)
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to start upload (${res.status}): ${await res.text()}`);
+      }
+
+      // The resumable session URL is in the Location header.
+      const sessionUrl = res.headers.get('Location');
+      if (!sessionUrl) throw new Error('No resumable Location header returned.');
+      return sessionUrl;
+    }
+
+    // Step 2: Upload file bytes to the resumable session URL (single PUT). Shows progress.
+    function putFile(sessionUrl, file, ui) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', sessionUrl, true);
+        xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const pct = Math.round((e.loaded / e.total) * 100);
+            ui.fill.style.width = pct + '%';
+            ui.status.textContent = `Uploading… ${pct}%`;
+          } else {
+            ui.status.textContent = 'Uploading…';
+          }
+        };
+
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            // 200 or 201 on success; 308 indicates incomplete (resumable continuation)
+            if (xhr.status === 200 || xhr.status === 201) {
+              ui.fill.style.width = '100%';
+              ui.status.innerHTML = `<span class="ok">Uploaded ✓</span>`;
+              try {
+                const fileObj = JSON.parse(xhr.responseText);
+                // Optionally add a link to the uploaded file
+                ui.status.innerHTML += ` — <a href="https://drive.google.com/file/d/${encodeURIComponent(fileObj.id)}/view" target="_blank" rel="noopener">Open file</a>`;
+              } catch (_) { /* ignore */ }
+              resolve();
+            } else {
+              ui.status.innerHTML = `<span class="err">Failed (${xhr.status})</span>`;
+              reject(new Error(`Upload failed: ${xhr.status} ${xhr.responseText || ''}`));
+            }
+          }
+        };
+
+        xhr.onerror = () => {
+          ui.status.innerHTML = `<span class="err">Network error</span>`;
+          reject(new Error('Network error during upload'));
+        };
+
+        xhr.send(file);
+      });
+    }
+
+    async function uploadOne(file) {
+      const ui = makeItem(file);
+      try {
+        ui.status.textContent = 'Preparing upload session…';
+        const sessionUrl = await startResumableSession(file);
+        await putFile(sessionUrl, file, ui);
+      } catch (e) {
+        console.error(e);
+        ui.status.innerHTML = `<span class="err">${String(e.message || e)}</span>`;
+        throw e;
+      }
+    }
+
+    // ============================
+    // OPTIONAL: Apps Script method
+    // ============================
+    /*
+     If you need *anonymous/public* uploads without Google sign-in, deploy a Google Apps Script web app
+     that receives a POST and writes to your Drive folder. Then, replace the OAuth upload calls above
+     with fetch() to your script URL.
+
+     Apps Script (Code.gs):
+
+     const FOLDER_ID = 'YOUR_DRIVE_FOLDER_ID';
+     function doPost(e) {
+       try {
+         const name = (e.parameter && e.parameter.name) || `upload-${Date.now()}`;
+         const blob = Utilities.newBlob(e.postData.contents, e.postData.type || 'application/octet-stream', name);
+         const folder = DriveApp.getFolderById(FOLDER_ID);
+         const file = folder.createFile(blob);
+         return ContentService
+           .createTextOutput(JSON.stringify({ ok: true, id: file.getId(), name: file.getName() }))
+           .setMimeType(ContentService.MimeType.JSON);
+       } catch (err) {
+         return ContentService
+           .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
+           .setMimeType(ContentService.MimeType.JSON);
+       }
+     }
+
+     Deploy as:
+       - "Execute as": Me
+       - "Who has access": Anyone
+     NOTE: This writes to *your* Drive as the script owner. Enforce limits and validations.
+
+     Frontend fetch example:
+       const url = 'YOUR_APPS_SCRIPT_DEPLOYMENT_URL';
+       const form = new FormData();
+       form.append('name', file.name);
+       form.append('file', file, file.name); // e.postData will contain the raw body; you can also send raw bytes
+       // For raw body instead of FormData:
+       // fetch(url+'?name='+encodeURIComponent(file.name), { method:'POST', body:file });
+
+       // Then in the uploader, replace Drive API sequence with a POST to the above url per file.
+    */
+  </script>
+</body>
+</html>
+``
