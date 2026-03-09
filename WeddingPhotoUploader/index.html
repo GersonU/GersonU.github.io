@@ -155,7 +155,7 @@
         const ui = makeItem(file);
         try {
           // Client-side guard for Apps Script practical limit
-          if (file.size > 48 * 1024 * 1024) {
+          if (file.size > 500 * 1024 * 1024) {
             ui.status.innerHTML = `<span class="err">Too large (>${pretty(48*1024*1024)})</span>`;
             continue;
           }
