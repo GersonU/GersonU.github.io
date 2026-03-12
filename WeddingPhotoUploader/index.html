@@ -88,13 +88,13 @@
           <div class="row justify-content-center align-items-center pt-5 pb-2">
             <div class="col-10 col-lg-4 text-center">
                 <h1>Upload Photos & Videos to Drive</h1>
-                <button id="uploadBtn">Upload photos/videos</button>
-                <a class="btn secondary" id="openFolderBtn" target="_blank" rel="noopener">Open shared folder</a>
+                <button class="my-1" id="uploadBtn">Upload photos/videos</button>
+                <a class="btn secondary my-1" id="openFolderBtn" target="_blank" rel="noopener">Open shared folder</a>
             </div>
           </div>
-          <div class="row justify-content-center align-items-center py-1">
+          <div class="row justify-content-center align-items-center py-1">1
             <div class="col-10 col-lg-4 text-center">
-                <label class="form-label">Uploads stay on this page. No Google sign‑in required. Large files (&gt;~50 MB) are not supported by Apps Script—use smaller clips/photos.</button>
+                <label class="form-label">Large files (&gt;50 MB) are not supported. If you would like to upload larger files or there are errors, you can use the 'Open shared folder' button to upload directly to google drive.</button>
             </div>
           </div>
           <div class="row justify-content-center align-items-center pt-1 pb-5">
@@ -113,7 +113,7 @@
 
   <script>
     // ========= CONFIG =========
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzzmuQ8blt1uCYR20gbZP-m-rsoRjyimv_MuLcVDyl1U7P5YD1zB7ZOTwroUUwqavw/exec';
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxA6YPMbYz4XGHW7lFjiFwmsCdHPPHbJS_fG979M21XZVSh9eUztLom6MPIlAwJhw_n/exec';
     const FOLDER_ID   = '1BHmcNLzyUNgYO0qfIQqAYJCrVzDBSoY7'; // for the "Open folder" button
 
     // ======== UI wiring ========
@@ -155,7 +155,7 @@
         const ui = makeItem(file);
         try {
           // Client-side guard for Apps Script practical limit
-          if (file.size > 500 * 1024 * 1024) {
+          if (file.size > 55 * 1024 * 1024) {
             ui.status.innerHTML = `<span class="err">Too large (>${pretty(48*1024*1024)})</span>`;
             continue;
           }
@@ -163,14 +163,11 @@
           ui.status.textContent = 'Encoding…';
           const base64 = await fileToBase64(file); // data:...;base64,XXXX
           const b64 = base64.split(',')[1] || base64; // strip data URL prefix
-          
-          const searchParams = new URLSearchParams(window.location.search);
 
-          const jsonbody =  JSON.stringify({ name: file.name, type: file.type || 'application/octet-stream', data: b64, password: searchParams.get('password') });
+          const jsonbody =  JSON.stringify({ name: file.name, type: file.type || 'application/octet-stream', data: b64 });
 
           xhrUpload(WEB_APP_URL, jsonbody, ui);
         } catch (err) {
-          console.error(err);
           ui.status.innerHTML = `<span class="err">${String(err.message || err)}</span>`;
         }
       }
