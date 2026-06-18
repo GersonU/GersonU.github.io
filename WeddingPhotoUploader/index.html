@@ -88,13 +88,13 @@
           <div class="row justify-content-center align-items-center pt-5 pb-2">
             <div class="col-10 col-lg-4 text-center">
                 <h1>Upload Photos & Short Videos</h1>
-                <button class="my-2" id="uploadBtn">Upload photos/videos</button>
+                <button class="my-2" id="uploadBtn" style="display:none">Upload photos/videos</button>
                 <a class="btn secondary my-2" id="openFolderBtn" target="_blank" rel="noopener">Open shared folder</a>
             </div>
           </div>
           <div class="row justify-content-center align-items-center py-1">
             <div class="col-10 col-lg-4 text-center">
-                <label class="form-label">Large files (&gt;50 MB) are not supported. If you would like to upload larger files or there are errors, you can use the 'Open shared folder' button to upload directly to google drive.</button>
+                <div class="alert alert-warning" role="alert">Uploading disabled from here, open shared folder to upload.</div>
             </div>
           </div>
           <div class="row justify-content-center align-items-center pt-1 pb-5">
@@ -113,7 +113,7 @@
 
   <script>
     // ========= CONFIG =========
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxA6YPMbYz4XGHW7lFjiFwmsCdHPPHbJS_fG979M21XZVSh9eUztLom6MPIlAwJhw_n/exec';
+    const WEB_APP_URL = '';
     const FOLDER_ID   = '1BHmcNLzyUNgYO0qfIQqAYJCrVzDBSoY7'; // for the "Open folder" button
 
     // ======== UI wiring ========
